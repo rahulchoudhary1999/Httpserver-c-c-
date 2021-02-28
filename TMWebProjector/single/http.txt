@@ -1,0 +1,19 @@
+request (method types)
+GET
+POST
+PUT
+DELETE
+HEAD
+CONNECT
+OPTIONS
+TRACE
+PATCH
+
+The First word in the First Line of request contains the method part
+The Second word int the First Line of the request contains the resource name, if the request is GET / POST (As of now we are concerned about GET / POST only) 
+
+
+MIME TYPES
+html or htm in any case combination   text/html        10
+css in any case combination           text/css          9
+js in any case combination            text/javascript  16

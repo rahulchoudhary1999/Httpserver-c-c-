@@ -1,0 +1,64 @@
+#include<map>
+#include<iostream>
+#include <vector> 
+using namespace std;
+
+namespace tmwp
+{
+class RequestHandler;
+class Request
+{
+private:
+int dataCount;
+char **data;
+int clientSocketDescriptor;
+vector<RequestHandler *> requestHandler;
+//map<const char *,int> requestContainer;
+public:
+map<const char *,int> requestContainer;
+map<char *,char *> dataMap;
+Request(int dataCount,char **data,int clientSocketDescriptor,vector<RequestHandler *> requestHandler);
+~Request();
+char * get(char *name);
+void populateMap(int dataCount,char **data);
+void forward(const char *str);
+void setInt(const char *key,int value);
+int getInt(const char *);
+//vector<RequestHandler *> getRequestHandler(TMWebProjector tm);
+};
+class Response
+{
+private:
+int clientSocketDescriptor;
+int response;
+public:
+Response(int clientSocketDescriptor);
+~Response();
+void write(const char *str);
+void close();
+};
+class RequestHandler
+{
+public:
+const char *url;
+void (*ptrOnRequest)(Request &,Response &);
+RequestHandler();
+~RequestHandler();
+};
+class TMWebProjector
+{
+private :
+int portNumber;
+char *url;
+void (*ptrOnRequest)(Request &,Response &);
+//map<char *,void (*)(Request &,Response &)> requestMappedToFunction;
+public:
+vector<RequestHandler *> requestHandler;
+TMWebProjector(int portNumber);
+~TMWebProjector();
+void start();
+vector<RequestHandler *> getRequestHandler();
+void onRequest(const char *url,void (*ptrOnRequest)(Request &,Response &));
+};
+
+}
